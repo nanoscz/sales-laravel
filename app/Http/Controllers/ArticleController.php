@@ -90,7 +90,7 @@ class ArticleController extends Controller
     public function changeState(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-        $article = Category::findOrFail($request->id);
+        $article = Article::findOrFail($request->id);
         if ($article->state == '1') {
             $article->state = '0';
         } else {
