@@ -32,7 +32,7 @@ class ClientController extends Controller
                 'from' => $clients->firstItem(),
                 'to' => $clients->lastItem()
             ],
-            'categories' => $clients
+            'clients' => $clients
         ];
     }
 
