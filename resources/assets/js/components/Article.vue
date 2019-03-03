@@ -127,6 +127,28 @@
           </div>
           <div class="modal-body">
             <form action method="post" enctype="multipart/form-data" class="form-horizontal">
+							<div class="form-group row">
+                <label class="col-md-3 form-control-label" for="text-input">Category</label>
+                <div class="col-md-9">
+                  <select class="form-control" v-model="id_category">
+										<option value="0" disable>Select</option>
+										<option v-for="category in categories" :key="category.id" :value="category.id" v-text="category.name"></option>
+									</select>
+                </div>
+              </div>
+							<div class="form-group row">
+                <label class="col-md-3 form-control-label" for="text-input">Code</label>
+                <div class="col-md-9">
+                  <input
+                    type="text"
+                    v-model="code"
+                    class="form-control"
+                    placeholder="Code"
+                  >
+									<barcode :value="code" :option="{format: 'EAN-13'}">
+									</barcode>
+                </div>
+              </div>
               <div class="form-group row">
                 <label class="col-md-3 form-control-label" for="text-input">Name</label>
                 <div class="col-md-9">
@@ -135,6 +157,26 @@
                     v-model="name"
                     class="form-control"
                     placeholder="Name"
+                  >
+                </div>
+              </div>
+							<div class="form-group row">
+                <label class="col-md-3 form-control-label" for="text-input">Price</label>
+                <div class="col-md-9">
+                  <input
+                    type="number"
+                    v-model="price"
+                    class="form-control"
+                  >
+                </div>
+              </div>
+							<div class="form-group row">
+                <label class="col-md-3 form-control-label" for="text-input">Stock</label>
+                <div class="col-md-9">
+                  <input
+                    type="number"
+                    v-model="stock"
+                    class="form-control"
                   >
                 </div>
               </div>
@@ -207,6 +249,7 @@
 </template>
 
 <script>
+import VueBarcode from 'vue-barcode';
 export default {
   data() {
     return {
@@ -234,8 +277,12 @@ export default {
 			},
 			offset: 3,
 			option:'name',
-			search:''
+			search:'',
+			categories: []
     };
+	},
+	components: {
+		'barcode': VueBarcode
 	},
 	computed: {
 		isActived: function () {
@@ -279,6 +326,18 @@ export default {
           console.error(err);
         });
 		},
+		getCategories() {
+			let ctrl = this;
+      axios
+        .get('/categories')
+        .then(function(res) {
+					let response = res.data;
+					ctrl.categories = response.categories;
+        })
+        .catch(function(err) {
+          console.error(err);
+        });
+		},
 		changePage(page, search, option){
 			let ctrl = this;
 			//update current page
@@ -302,7 +361,11 @@ export default {
 			}
 			let ctrl = this;
 			let data = {
+				'id_category': ctrl.id_category,
 				'name': ctrl.name,
+				'code': ctrl.code,
+				'price': ctrl.price,
+				'stock': ctrl.stock,
 				'description': ctrl.description 
 			};
       axios
@@ -322,9 +385,13 @@ export default {
 				return; 
 			}
 			let ctrl = this;
-			let data = {
+				let data = {
 				'id': ctrl.id,
+				'id_category': ctrl.id_category,
 				'name': ctrl.name,
+				'code': ctrl.code,
+				'price': ctrl.price,
+				'stock': ctrl.stock,
 				'description': ctrl.description 
 			};
       axios
@@ -349,8 +416,7 @@ export default {
 							this.modal = 1;
 							this.typeAction = 1;
 							this.titleModal = 'Register Article'
-							this.name= '';
-							this.description = '';
+							this.clearField()
 							break;
 						}
 						case "update":
@@ -359,17 +425,29 @@ export default {
 							this.typeAction = 2;
 							this.titleModal = 'Update Article';
 							this.id = data['id'];
+							this.id_category = data['id_category'];
+							this.code = data['code'];
 							this.name = data['name'];
+							this.price = data['price'];
+							this.stock = data['stock'];
 							this.description = data['description'];
 						}
 					}
 				}
 			}
+			this.getCategories();
 		},
 		closeModal() {
 			this.modal = 0;
 			this.titleModal = '';
-			this.name= '';
+			this.clearField()
+		},
+		clearField() {
+			this.id_category = 0,
+			this.code = '',
+			this.name = '';
+			this.price = 0,
+			this.stock = 0,
 			this.description = '';
 		},
 		clearError(){
