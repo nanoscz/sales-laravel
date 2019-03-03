@@ -25,3 +25,8 @@ Route::get('/article','ArticleController@index');
 Route::post('/article','ArticleController@store');
 Route::put('/article','ArticleController@update');
 Route::put('/article/state','ArticleController@changeState');
+
+Route::get('/client','ClientController@index');
+Route::post('/client','ClientController@store');
+Route::put('/client','ClientController@update');
+Route::put('/client/state','ClientController@changeState');
