@@ -7,7 +7,7 @@
         <category></category>
     </template>
     <template v-if="menu==2">
-        <h1>el menu seleccionado es 2</h1>
+        <articles></articles>
     </template>
     <template v-if="menu==3">
         <h1> el menu seleccionado es 1</h1>
