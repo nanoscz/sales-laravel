@@ -21,6 +21,7 @@ class CreatePersonTable extends Migration
             $table->string('direction', 70)->nullable();
             $table->string('phone', 20)->nullable();
             $table->string('email', 50)->nullable();
+            $table->boolean('state')->default(1);
             $table->timestamps();
         });
     }
