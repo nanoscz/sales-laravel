@@ -388,7 +388,7 @@ export default {
 						'success'
 					)
 					axios
-						.put("/state", data)
+						.put("/category/state", data)
 						.then(function(res) {
 							ctrl.show(1, '', 'name');
 						})
