@@ -26,7 +26,11 @@
               <div class="input-group">
                 <select class="form-control col-md-3" v-model="option">
                   <option value="name">Name</option>
-                  <option value="description">Description</option>
+									<option value="type_document">Document Type</option>
+									<option value="num_document">num_document</option>
+                  <option value="direction">Direction</option>
+									<option value="phone">Phone</option>
+									<option value="email">email</option>
                 </select>
                 <input
                   type="text"
@@ -138,13 +142,57 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-3 form-control-label" for="email-input">Description</label>
+                <label class="col-md-3 form-control-label" for="text-input">Document Type</label>
+                <div class="col-md-9">
+                  <input
+                    type="text"
+                    v-model="type_document"
+                    class="form-control"
+                    placeholder="Document Type"
+                  >
+                </div>
+              </div>
+							 <div class="form-group row">
+                <label class="col-md-3 form-control-label" for="text-input">Number Document</label>
+                <div class="col-md-9">
+                  <input
+                    type="number"
+                    v-model="num_document"
+                    class="form-control"
+                    placeholder="Document Number"
+                  >
+                </div>
+              </div>
+							 <div class="form-group row">
+                <label class="col-md-3 form-control-label" for="text-input">Direction</label>
+                <div class="col-md-9">
+                  <input
+                    type="text"
+                    v-model="direction"
+                    class="form-control"
+                    placeholder="Direction"
+                  >
+                </div>
+              </div>
+							 <div class="form-group row">
+                <label class="col-md-3 form-control-label" for="text-input">Phone</label>
+                <div class="col-md-9">
+                  <input
+                    type="text"
+                    v-model="phone"
+                    class="form-control"
+                    placeholder="Phone"
+                  >
+                </div>
+              </div>
+							 <div class="form-group row">
+                <label class="col-md-3 form-control-label" for="text-input">Email</label>
                 <div class="col-md-9">
                   <input
                     type="email"
-										v-model="description"
+                    v-model="email"
                     class="form-control"
-                    placeholder="Description"
+                    placeholder="Email"
                   >
                 </div>
               </div>
@@ -210,8 +258,12 @@ export default {
   data() {
     return {
 			id: 0,
-      name: '',
-      description: '',
+			name: '',
+			type_document: '',
+			num_document: '',
+			direction: '',
+			phone: '',
+			email: '',
 			clients: [],
 			modal: 0,
 			titleModal: '',
@@ -285,6 +337,8 @@ export default {
 		validate(){
 			this.clearError();
 			if (!this.name) this.listErr.push('Field required name!')
+			if (!this.type_document) this.listErr.push('Field required document type!')
+			if (!this.num_document) this.listErr.push('Field required document number !')
 			if (this.listErr.length) this.err = 1
 			return this.err;
 		},
@@ -295,7 +349,11 @@ export default {
 			let ctrl = this;
 			let data = {
 				'name': ctrl.name,
-				'description': ctrl.description 
+				'type_document': ctrl.type_document,
+				'num_document': ctrl.num_document,
+				'direction': ctrl.direction,
+				'phone': ctrl.phone,
+				'email': ctrl.email,
 			};
       axios
         .post("/client", data)
@@ -317,7 +375,11 @@ export default {
 			let data = {
 				'id': ctrl.id,
 				'name': ctrl.name,
-				'description': ctrl.description 
+				'type_document': ctrl.type_document,
+				'num_document': ctrl.num_document,
+				'direction': ctrl.direction,
+				'phone': ctrl.phone,
+				'email': ctrl.email,
 			};
       axios
         .put("/client", data)
@@ -340,7 +402,7 @@ export default {
 							this.clearError();
 							this.modal = 1;
 							this.typeAction = 1;
-							this.titleModal = 'Register Category'
+							this.titleModal = 'Register Client'
 							this.name= '';
 							this.description = '';
 							break;
@@ -349,10 +411,14 @@ export default {
 						{
 							this.modal = 1;
 							this.typeAction = 2;
-							this.titleModal = 'Update Category';
+							this.titleModal = 'Update Client';
 							this.id = data['id'];
 							this.name = data['name'];
-							this.description = data['description'];
+							this.type_document = data['type_document'];
+							this.num_document = data['num_document'];
+							this.direction = data['direction'];
+							this.phone = data['phone'];
+							this.email = data['email'];
 						}
 					}
 				}
@@ -362,7 +428,11 @@ export default {
 			this.modal = 0;
 			this.titleModal = '';
 			this.name= '';
-			this.description = '';
+			this.type_document = '';
+			this.num_document = '';
+			this.direction = '';
+			this.phone = '';
+			this.email = '';
 		},
 		clearError(){
 			this.err = 0;
