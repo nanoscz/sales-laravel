@@ -12,11 +12,11 @@
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
         <div class="card-header">
-          <i class="fa fa-align-justify"></i> Category
+          <i class="fa fa-align-justify"></i> Article
           <button
             type="button"
             class="btn btn-secondary"
-						@click="openModal('category','register')">
+						@click="openModal('article','register')">
             <i class="icon-plus"></i>&nbsp;Add
           </button>
         </div>
@@ -25,6 +25,7 @@
             <div class="col-md-6">
               <div class="input-group">
                 <select class="form-control col-md-3" v-model="option">
+									<option value="code">Code</option>
                   <option value="name">Name</option>
                   <option value="description">Description</option>
                 </select>
@@ -44,37 +45,45 @@
           <table class="table table-bordered table-striped table-sm">
             <thead>
               <tr>
-                <th>Opciones</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Estado</th>
+                <th>Option</th>
+								<th>Code</th>
+                <th>Name</th>
+								<th>Category</th>
+                <th>Description</th>
+								<th>Price</th>
+								<th>Stock</th>
+                <th>State</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="category in categories" :key="category.id">
+              <tr v-for="article in articles" :key="article.id">
                 <td>
                   <button
                     type="button"
                     class="btn btn-warning btn-sm"
-										@click="openModal('category','update', category)">
+										@click="openModal('article','update', article)">
                     <i class="icon-pencil"></i>
                   </button> &nbsp;
                   <button
                     type="button"
                     class="btn btn-danger btn-sm"
-										@click="openModal('category','register')"
+										@click="openModal('article','register')"
 										>
                     <i class="icon-trash"></i>
                   </button>
                 </td>
-                <td v-text="category.name"></td>
-                <td v-text="category.description"></td>
+								<td v-text="article.code"></td>
+                <td v-text="article.name"></td>
+								<td v-text="article.category"></td>
+                <td v-text="article.description"></td>
+							 	<td v-text="article.price"></td>
+							  <td v-text="article.stock"></td>
                 <td>
-									<div v-if="category.state">
-                  	<span @click="changeState(category.id)" class="badge badge-success">active</span>
+									<div v-if="article.state">
+                  	<span @click="changeState(article.id)" class="badge badge-success">active</span>
 									</div>
 									<div v-else>
-                  	<span @click="changeState(category.id)" class="badge badge-danger">desactive</span>
+                  	<span @click="changeState(article.id)" class="badge badge-danger">desactive</span>
 									</div>
                 </td>
               </tr>
@@ -202,9 +211,14 @@ export default {
   data() {
     return {
 			id: 0,
-      name: '',
+			id_category: 0,
+			category:'',
+			code: '',
+			name: '',
+			price: 0,
+			stock: 0,
       description: '',
-			categories: [],
+			articles: [],
 			modal: 0,
 			titleModal: '',
 			typeAction: 0,
@@ -252,15 +266,13 @@ export default {
 	},
   methods: {
     show(page, search, option) {
-			console.log(page);
 			let ctrl = this;
-			let url = '/category?page=' + page + '&search=' + search + '&option=' + option;
+			let url = '/article?page=' + page + '&search=' + search + '&option=' + option;
       axios
         .get(url)
         .then(function(res) {
-					console.log(res);
 					let response = res.data;
-					ctrl.categories = response.categories.data;
+					ctrl.articles = response.articles.data;
 					ctrl.pagination = response.pagination;
         })
         .catch(function(err) {
@@ -277,6 +289,10 @@ export default {
 		validate(){
 			this.clearError();
 			if (!this.name) this.listErr.push('Field required name!')
+			if (!this.code) this.listErr.push('Field required code!')
+			if (!this.price) this.listErr.push('Field required price!')
+			if (!this.stock) this.listErr.push('Field required stock!')
+			if (!this.id_category) this.listErr.push('Field required category!')
 			if (this.listErr.length) this.err = 1
 			return this.err;
 		},
@@ -290,9 +306,9 @@ export default {
 				'description': ctrl.description 
 			};
       axios
-        .post("/category", data)
+        .post("/article", data)
         .then(function(res) {
-					// me.categories.push(data)
+					// me.articles.push(data)
 					ctrl.show(1, '', 'name');
 					ctrl.closeModal();
 					console.log(res);
@@ -312,7 +328,7 @@ export default {
 				'description': ctrl.description 
 			};
       axios
-        .put("/category", data)
+        .put("/article", data)
         .then(function(res) {
 					ctrl.show(1, '', 'name');
 					ctrl.closeModal();
@@ -324,7 +340,7 @@ export default {
 		},
 		openModal(model, action, data = []) {
 			switch (model) {
-				case "category":
+				case "article":
 				{
 					switch (action) {
 						case "register":
@@ -332,7 +348,7 @@ export default {
 							this.clearError();
 							this.modal = 1;
 							this.typeAction = 1;
-							this.titleModal = 'Register Category'
+							this.titleModal = 'Register Article'
 							this.name= '';
 							this.description = '';
 							break;
@@ -341,7 +357,7 @@ export default {
 						{
 							this.modal = 1;
 							this.typeAction = 2;
-							this.titleModal = 'Update Category';
+							this.titleModal = 'Update Article';
 							this.id = data['id'];
 							this.name = data['name'];
 							this.description = data['description'];
@@ -361,7 +377,7 @@ export default {
 			this.listErr = [];
 		},
 		changeState(id) {
-			console.log('category',id);
+			console.log('article',id);
 			let ctrl = this;
 			let data = {
 				id
@@ -388,7 +404,7 @@ export default {
 						'success'
 					)
 					axios
-						.put("/category/state", data)
+						.put("/article/state", data)
 						.then(function(res) {
 							ctrl.show(1, '', 'name');
 						})
