@@ -10,7 +10,7 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
      */
     public function index(Request $request)
     {   
@@ -35,6 +35,21 @@ class CategoryController extends Controller
             'categories' => $category
         ];
     }
+
+     /**
+     * Display a categories of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function categories(Request $request)
+    {   
+        if (!$request->ajax()) return redirect('/'); 
+        $categories = Category::where('state','=', '1')
+        ->select('id','name')->orderBy('name','asc')->get();
+
+        return ['categories' => $categories];
+    }
+
 
     /**
      * Store a newly created resource in storage.
