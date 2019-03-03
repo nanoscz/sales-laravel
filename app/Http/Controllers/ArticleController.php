@@ -36,7 +36,7 @@ class ArticleController extends Controller
                 'from' => $articles->firstItem(),
                 'to' => $articles->lastItem()
             ],
-            'categories' => $articles
+            'articles' => $articles
         ];
     }
 
