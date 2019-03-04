@@ -467,56 +467,56 @@ export default {
       this.err = 0;
       this.listErr = [];
     },
-    changeState(id) {
-      console.log("provider", id);
-      let ctrl = this;
-      let data = {
-        id
-      };
-      const swalWithBootstrapButtons = Swal.mixin({
-        confirmButtonClass: "btn btn-success",
-        cancelButtonClass: "btn btn-danger",
-        buttonsStyling: false
-      });
+    // changeState(id) {
+    //   console.log("provider", id);
+    //   let ctrl = this;
+    //   let data = {
+    //     id
+    //   };
+    //   const swalWithBootstrapButtons = Swal.mixin({
+    //     confirmButtonClass: "btn btn-success",
+    //     cancelButtonClass: "btn btn-danger",
+    //     buttonsStyling: false
+    //   });
 
-      swalWithBootstrapButtons
-        .fire({
-          title: "Change",
-          text: "You want to change the state?",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Yes, change!",
-          cancelButtonText: "No, cancel!",
-          reverseButtons: true
-        })
-        .then(result => {
-          if (result.value) {
-            swalWithBootstrapButtons.fire(
-              "Change!",
-              "Change Sucessfull.",
-              "success"
-            );
-            axios
-              .put("/provider/state", data)
-              .then(function(res) {
-                ctrl.show(1, "", "name");
-              })
-              .catch(function(err) {
-                console.error(err);
-              });
-          } else if (
-            // Read more about handling dismissals
-            result.dismiss === Swal.DismissReason.cancel
-          ) {
-            swalWithBootstrapButtons.fire(
-              "Cancelled",
-              "Change Canceled.",
-              "error"
-            );
-            console.log("B");
-          }
-        });
-    }
+    //   swalWithBootstrapButtons
+    //     .fire({
+    //       title: "Change",
+    //       text: "You want to change the state?",
+    //       type: "warning",
+    //       showCancelButton: true,
+    //       confirmButtonText: "Yes, change!",
+    //       cancelButtonText: "No, cancel!",
+    //       reverseButtons: true
+    //     })
+    //     .then(result => {
+    //       if (result.value) {
+    //         swalWithBootstrapButtons.fire(
+    //           "Change!",
+    //           "Change Sucessfull.",
+    //           "success"
+    //         );
+    //         axios
+    //           .put("/provider/state", data)
+    //           .then(function(res) {
+    //             ctrl.show(1, "", "name");
+    //           })
+    //           .catch(function(err) {
+    //             console.error(err);
+    //           });
+    //       } else if (
+    //         // Read more about handling dismissals
+    //         result.dismiss === Swal.DismissReason.cancel
+    //       ) {
+    //         swalWithBootstrapButtons.fire(
+    //           "Cancelled",
+    //           "Change Canceled.",
+    //           "error"
+    //         );
+    //         console.log("B");
+    //       }
+    //     });
+    // }
   },
   mounted() {
     this.show(1, this.search, this.option);
