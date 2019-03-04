@@ -42,3 +42,7 @@ Route::put('/client/state','ClientController@changeState');
 Route::get('/provider','ProviderController@index');
 Route::post('/provider','ProviderController@store');
 Route::put('/provider','ProviderController@update');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
