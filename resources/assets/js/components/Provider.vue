@@ -423,14 +423,14 @@ export default {
               this.modal = 1;
               this.typeAction = 1;
               this.titleModal = "Register Provider";
-              this.name = "fernad";
-              this.type_document = "CI";
-              this.num_document = 123123;
-              this.direction = "asdasd";
-              this.phone = "123123";
-              this.email = "asda@sadads.com";
-              this.contact = "123123";
-              this.contact_phone = "123123";
+              this.name = "";
+              this.type_document = "";
+              this.num_document = "";
+              this.direction = "";
+              this.phone = "";
+              this.email = "";
+              this.contact = "";
+              this.contact_phone = "";
               break;
             }
             case "update": {
