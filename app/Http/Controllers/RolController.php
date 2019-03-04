@@ -36,4 +36,18 @@ class RolController extends Controller
             'roles' => $roles
         ];
     }
+
+    /**
+     * Display a categories of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function roles(Request $request)
+    {   
+        if (!$request->ajax()) return redirect('/'); 
+        $roles = Rol::where('state','=', '1')
+        ->select('id','name')->orderBy('name','asc')->get();
+
+        return ['roles' => $roles];
+    }
 }
