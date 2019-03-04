@@ -12,4 +12,8 @@ class Person extends Model
     public function proveedor(){
         return $this->hasOne('App\Provider');
     }
+
+    public function user(){
+        return $this->hasOne('App\User');
+    }
 }
