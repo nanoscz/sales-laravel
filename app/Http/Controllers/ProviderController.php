@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Provider;
+
 use App\Person;
+use App\Provider;
 
 class ProviderController extends Controller
 {
@@ -67,12 +68,12 @@ class ProviderController extends Controller
             $person->save();
 
             $provider = new Provider();
-            $provider->contact = $request->$contact;
+            $provider->contact = $request->contact;
             $provider->contact_phone = $request->contact_phone;
             $provider->id = $person->id;
             $provider->save();
 
-            DB::commint();
+            DB::commit();
 
         } catch (Exteption $e) {
             DB::rollBack();
@@ -103,11 +104,11 @@ class ProviderController extends Controller
             $person->state = '1';
             $person->save();
 
-            $provider->contact = $request->$contact;
+            $provider->contact = $request->contact;
             $provider->contact_phone = $request->contact_phone;
             $provider->save();
 
-            DB::commint();
+            DB::commit();
 
         } catch (Exteption $e) {
             DB::rollBack();
