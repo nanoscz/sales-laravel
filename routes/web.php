@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('partial/content');
 });
 
+Route::get('/rol','RolController@index');
+
 Route::get('/category','CategoryController@index');
 Route::get('/categories','CategoryController@categories');
 Route::post('/category','CategoryController@store');
