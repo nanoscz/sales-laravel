@@ -22,7 +22,7 @@
         <client></client>
     </template>
     <template v-if="menu==7">
-        <h1> el menu seleccionado es 1</h1>
+        <user></user>
     </template>
     <template v-if="menu==8">
         <rol></rol>
