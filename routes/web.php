@@ -16,6 +16,12 @@ Route::get('/', function () {
 });
 
 Route::get('/rol','RolController@index');
+Route::get('/roles','RolController@roles');
+
+Route::get('/user','UserController@index');
+Route::post('/user','UserController@store');
+Route::put('/user','UserController@update');
+Route::put('/user/state','UserController@changeState');
 
 Route::get('/category','CategoryController@index');
 Route::get('/categories','CategoryController@categories');
