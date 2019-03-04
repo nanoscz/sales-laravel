@@ -30,3 +30,7 @@ Route::get('/client','ClientController@index');
 Route::post('/client','ClientController@store');
 Route::put('/client','ClientController@update');
 Route::put('/client/state','ClientController@changeState');
+
+Route::get('/provider','ProviderController@index');
+Route::post('/provider','ProviderController@store');
+Route::put('/provider','ProviderController@update');
