@@ -11,9 +11,14 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/','Auth\LoginController@showLoginForm');
+Route::post('/login','Auth\LoginController@login')->name('login');
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/main', function () {
     return view('partial/content');
-});
+})->name('main');
 
 Route::get('/rol','RolController@index');
 Route::get('/roles','RolController@roles');
@@ -42,7 +47,3 @@ Route::put('/client/state','ClientController@changeState');
 Route::get('/provider','ProviderController@index');
 Route::post('/provider','ProviderController@store');
 Route::put('/provider','ProviderController@update');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
