@@ -99,7 +99,7 @@
       aria-labelledby="myModalLabel"
       style="display: none;"
       aria-hidden="true"
-			:class="{'show': modal}"
+			:class="{'show-modal': modal}"
 			>
       <div class="modal-dialog modal-primary modal-lg" role="document">
         <div class="modal-content">
@@ -411,7 +411,7 @@ export default {
 		width: 100% !important;
 		position: absolute !important;
 	}
-	.show {
+	.show-modal {
 		display: list-item !important;
 		opacity: 1 !important;
 		position: absolute !important;
