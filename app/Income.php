@@ -15,7 +15,7 @@ class Income extends Model
         'series_voucher',
         'num_voucher',
         'date',
-        'fax',
+        'tax',
         'total',
         'state'
     ];
