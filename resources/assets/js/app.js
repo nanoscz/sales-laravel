@@ -21,6 +21,7 @@ Vue.component('category', require('./components/Category.vue'));
 Vue.component('articles', require('./components/Article.vue'));
 Vue.component('client', require('./components/Client.vue'));
 Vue.component('provider', require('./components/Provider.vue'));
+Vue.component('income', require('./components/Income.vue'));
 const app = new Vue({
     el: '#app',
     data: {
