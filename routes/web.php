@@ -23,7 +23,8 @@ Route::group(['middleware'=> ['auth']], function(){
         return view('partial/content');
     })->name('main');
 
-    Route::group(['middleware'=> ['user']], function(){
+    Route::group(['middleware'=> ['warehouse']], function(){
+
         Route::get('/category','CategoryController@index');
         Route::get('/categories','CategoryController@categories');
         Route::post('/category','CategoryController@store');
@@ -38,6 +39,10 @@ Route::group(['middleware'=> ['auth']], function(){
         Route::get('/provider','ProviderController@index');
         Route::post('/provider','ProviderController@store');
         Route::put('/provider','ProviderController@update');
+
+        Route::get('/income','IncomeController@index');
+        Route::post('/income','IncomeController@store');
+        Route::put('/income/state','IncomeController@changeState');
     });
 
     Route::group(['middleware'=> ['seller']], function(){
@@ -48,7 +53,7 @@ Route::group(['middleware'=> ['auth']], function(){
     });
 
     Route::group(['middleware'=> ['admin']], function(){
-
+        
         Route::get('/category','CategoryController@index');
         Route::get('/categories','CategoryController@categories');
         Route::post('/category','CategoryController@store');
@@ -76,6 +81,10 @@ Route::group(['middleware'=> ['auth']], function(){
         Route::post('/user','UserController@store');
         Route::put('/user','UserController@update');
         Route::put('/user/state','UserController@changeState');
+
+        Route::get('/income','IncomeController@index');
+        Route::post('/income','IncomeController@store');
+        Route::put('/income/state','IncomeController@changeState');
     });  
 });
 
