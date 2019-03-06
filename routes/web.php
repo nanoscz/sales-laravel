@@ -32,11 +32,13 @@ Route::group(['middleware'=> ['auth']], function(){
         Route::put('/category/state','CategoryController@changeState');
         
         Route::get('/article','ArticleController@index');
+        Route::get('/articles','ArticleController@articles');
         Route::post('/article','ArticleController@store');
         Route::put('/article','ArticleController@update');
         Route::put('/article/state','ArticleController@changeState');
             
         Route::get('/provider','ProviderController@index');
+        Route::get('/providers','ProviderController@providers');
         Route::post('/provider','ProviderController@store');
         Route::put('/provider','ProviderController@update');
 
@@ -61,11 +63,13 @@ Route::group(['middleware'=> ['auth']], function(){
         Route::put('/category/state','CategoryController@changeState');
         
         Route::get('/article','ArticleController@index');
+        Route::get('/articles','ArticleController@articles');
         Route::post('/article','ArticleController@store');
         Route::put('/article','ArticleController@update');
         Route::put('/article/state','ArticleController@changeState');
             
         Route::get('/provider','ProviderController@index');
+        Route::get('/providers','ProviderController@providers');
         Route::post('/provider','ProviderController@store');
         Route::put('/provider','ProviderController@update');
 
