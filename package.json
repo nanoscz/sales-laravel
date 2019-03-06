@@ -19,6 +19,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
-        "vue-barcode": "^1.2.0"
+        "vue-barcode": "^1.2.0",
+        "vue-select": "^2.5.1"
     }
 }
