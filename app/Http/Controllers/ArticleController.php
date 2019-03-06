@@ -40,6 +40,22 @@ class ArticleController extends Controller
         ];
     }
 
+
+    /**
+     * Display a categories of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function articles(Request $request)
+    {   
+        $filter = $request->filter;
+        if (!$request->ajax()) return redirect('/'); 
+        $articles = Article::where('code','=', $filter)
+        ->select('id','name')->orderBy('name','asc')->get();
+
+        return ['articles' => $articles];
+    }
+
     /**
      * Store a newly created resource in storage.
      *
