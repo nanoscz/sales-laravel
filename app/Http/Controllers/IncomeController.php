@@ -36,7 +36,7 @@ class IncomeController extends Controller
             ->join('users','income.id_user','=','users.id')
             ->select('income.id', 'income.type_voucher', 'income.series_voucher', 'income.num_voucher', 
             'income.date','income.tax', 'income.total', 'income.state', 'person.name', 'users.username')
-            ->where('person.'.$option,'like','%'. $search .'%') ->orderBy('income.id','desc')->paginate(5);
+            ->where('income.'.$option,'like','%'. $search .'%') ->orderBy('income.id','desc')->paginate(5);
         }
         return [
             'pagination' => [
