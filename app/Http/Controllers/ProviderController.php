@@ -46,6 +46,24 @@ class ProviderController extends Controller
         ];
     }
 
+     /**
+     * Display a categories of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function providers(Request $request)
+    {   
+        if (!$request->ajax()) return redirect('/'); 
+        $filter = $request->filter;
+        $providers = Provider::join('person','provider.id','=','person.id')
+        ->where('person.name','like', '%'.$filter .'%')
+        ->orWhere('person.num_document', 'like', '%'. $filter .'%')
+        ->select('person.id','person.name','person.num_document')
+        ->orderBy('person.name','asc')->get();
+
+        return ['providers' => $providers];
+    }
+
     /**
      * Store a newly created resource in storage.
      *
