@@ -105,9 +105,7 @@ class IncomeController extends Controller
     {
         if (!$request->ajax()) return redirect('/');
         $income = Income::findOrFail($request->id);
-        if ($income->state == 'canceled') {
-            $income->state = 'register';
-        } else {
+        if ($income->state === 'register') {
             $income->state = 'canceled';
         }
         $income->save();
