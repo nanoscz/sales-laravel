@@ -40,6 +40,29 @@ class ArticleController extends Controller
         ];
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function modalarticles(Request $request)
+    {   
+        if (!$request->ajax()) return redirect('/');
+        $search = $request->search;
+        $option = $request->option;
+
+        if ($search == '') {
+            $articles = Article::join('category','article.id_category','=','category.id')
+            ->select('article.id','article.code','article.name','article.price','article.stock','article.description','article.state','article.id_category','category.name as category')
+            ->orderBy('article.id','desc')->paginate(10);
+        } else {
+            $articles = Article::join('category','article.id_category','=','category.id')
+            ->select('article.id','article.code','article.name','article.price','article.stock','article.description','article.state','article.id_category','category.name as category')
+            ->where('article.'.$option,'like','%'. $search .'%')->orderBy('id','desc')->paginate(10);
+        }
+        return ['articles' => $articles];
+    }
+
 
     /**
      * Display a categories of the resource.
