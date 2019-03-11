@@ -46,6 +46,8 @@ Route::group(['middleware'=> ['auth']], function(){
         Route::get('/income','IncomeController@index');
         Route::post('/income','IncomeController@store');
         Route::put('/income/state','IncomeController@changeState');
+        Route::get('/income/header','IncomeController@getHeader');
+        Route::get('/income/detail','IncomeController@getDetail');
     });
 
     Route::group(['middleware'=> ['seller']], function(){
@@ -91,6 +93,8 @@ Route::group(['middleware'=> ['auth']], function(){
         Route::get('/income','IncomeController@index');
         Route::post('/income','IncomeController@store');
         Route::put('/income/state','IncomeController@changeState');
+        Route::get('/income/header','IncomeController@getHeader');
+        Route::get('/income/detail','IncomeController@getDetail');
     });  
 });
 
