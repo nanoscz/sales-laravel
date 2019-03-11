@@ -442,7 +442,7 @@ export default {
               this.typeAction = 1;
               this.titleModal = "Register User";
               this.name = "";
-              this.type_document = "";
+              this.type_document = "CI";
               this.num_document = "";
               this.direction = "";
               this.phone = "";
