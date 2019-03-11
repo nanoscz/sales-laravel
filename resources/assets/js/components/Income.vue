@@ -60,13 +60,14 @@
                 <tbody>
                   <tr v-for="income in incomes" :key="income.id">
                     <td>
-                      <button
-                        type="button"
-                        class="btn btn-success btn-sm"
-                        @click="openModal('Income','update', income)"
-                      >
+                      <button type="button" class="btn btn-success btn-sm"
+                        @click="openModal('Income','update', income)">
                         <i class="icon-eye"></i>
                       </button> &nbsp;
+                    <button type="submit" class="btn btn-danger btn-sm" @click="changeState(income.id)"
+                        v-if="income.state == 'register'">
+                      <i class="fa fa-trash"></i>
+                    </button>
                     </td>
                     <td v-text="income.name"></td>
                     <td v-text="income.type_voucher"></td>
@@ -77,11 +78,11 @@
                     <td v-text="income.tax"></td>
                     <td v-text="income.username"></td>
                     <td>
-                      <div v-if="income.state">
-                        <span @click="changeState(income.id)" class="badge badge-success">active</span>
+                      <div v-if="income.state == 'register'">
+                        <span class="badge badge-success">register</span>
                       </div>
                       <div v-else>
-                        <span @click="changeState(income.id)" class="badge badge-danger">desactive</span>
+                        <span class="badge badge-danger">canceled</span>
                       </div>
                     </td>
                   </tr>
@@ -741,7 +742,7 @@ export default {
               "success"
             );
             axios
-              .put("/Income/state", data)
+              .put("/income/state", data)
               .then(function(res) {
                 ctrl.show(1, "", "name");
               })
