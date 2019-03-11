@@ -33,6 +33,7 @@ Route::group(['middleware'=> ['auth']], function(){
         
         Route::get('/article','ArticleController@index');
         Route::get('/articles','ArticleController@articles');
+        Route::get('/articles/modal','ArticleController@modalarticles');
         Route::post('/article','ArticleController@store');
         Route::put('/article','ArticleController@update');
         Route::put('/article/state','ArticleController@changeState');
@@ -64,6 +65,7 @@ Route::group(['middleware'=> ['auth']], function(){
         
         Route::get('/article','ArticleController@index');
         Route::get('/articles','ArticleController@articles');
+        Route::get('/articles/modal','ArticleController@modalarticles');
         Route::post('/article','ArticleController@store');
         Route::put('/article','ArticleController@update');
         Route::put('/article/state','ArticleController@changeState');
