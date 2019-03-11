@@ -192,6 +192,7 @@
                   <input type="email" v-model="email" class="form-control" placeholder="Email">
                 </div>
               </div>
+              <p style="color:#20a8d8">Legal Representative</p>
               <div class="form-group row">
                 <label class="col-md-3 form-control-label" for="text-input">Contact</label>
                 <div class="col-md-9">
