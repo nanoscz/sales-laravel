@@ -24,6 +24,17 @@ class CreatePersonTable extends Migration
             $table->boolean('state')->default(1);
             $table->timestamps();
         });
+        DB::table('person')->insert(
+            array(
+                'id' => '1',
+                'name' => 'admin',
+                'type_document' => 'CI',
+                'num_document' => '1234567890',
+                'direction' => '',
+                'phone' => '1234567890',
+                'email' => 'admin@admin.com'
+            )
+        );
     }
 
     /**

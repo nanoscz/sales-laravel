@@ -29,20 +29,13 @@ class CreateRolesTable extends Migration
         DB::table('roles')->insert(
             array(
                 'id' => '2',
-                'name' => 'user',
-                'description' => ''
-            )
-            );
-        DB::table('roles')->insert(
-            array(
-                'id' => '3',
                 'name' => 'seller',
                 'description' => 'super user.'
             )
             );
         DB::table('roles')->insert(
             array(
-                'id' => '4',
+                'id' => '3',
                 'name' => 'warehouse',
                 'description' => 'super user.'
             )

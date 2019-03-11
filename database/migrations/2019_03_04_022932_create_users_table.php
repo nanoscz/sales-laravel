@@ -25,6 +25,14 @@ class CreateUsersTable extends Migration
             $table->foreign('id')->references('id')->on('person')->onDelete('cascade');
             $table->foreign('id_rol')->references('id')->on('roles');
         });
+        DB::table('users')->insert(
+            array(
+                'id' => '1',
+                'id_rol' => '1',
+                'username' => 'admin',
+                'password' => bcrypt('admin')
+            )
+        );
     }
 
     /**
