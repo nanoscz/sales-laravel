@@ -13,7 +13,7 @@
       <div class="card">
         <div class="card-header">
           <i class="fa fa-align-justify"></i> Income
-          <button type="button" class="btn btn-secondary" @click="showDetail()">
+          <button type="button" class="btn btn-secondary" @click="openRegisterIncome()">
             <i class="icon-plus"></i>&nbsp;Add
           </button>
         </div>
@@ -46,7 +46,7 @@
                 <thead>
                   <tr>
                     <th>Option</th>
-                    <th>Name</th>
+                    <th>Provider</th>
                     <th>Type Voucher</th>
                     <th>Series</th>
                     <th>Number</th>
@@ -61,7 +61,7 @@
                   <tr v-for="income in incomes" :key="income.id">
                     <td>
                       <button type="button" class="btn btn-success btn-sm"
-                        @click="openModal('Income','update', income)">
+                        @click="showIncomeDetail(income)">
                         <i class="icon-eye"></i>
                       </button> &nbsp;
                     <button type="submit" class="btn btn-danger btn-sm" @click="changeState(income.id)"
@@ -127,7 +127,7 @@
         </template>
 
         <!-- add income -->
-        <template v-else>
+        <template v-else-if="list == 2">
           <div class="card-body">
             <div class="form-group row border">
               <div class="col-md-9">
@@ -281,7 +281,7 @@
                       <td>${{ total = calculateTotal }}</td>
                     </tr>
                   </tbody>
-                  <tbody>
+                  <tbody v-if="details.length <= 0">
                     <h3>Not Found</h3>
                   </tbody>
                 </table>
@@ -291,6 +291,94 @@
               <div class="col-md-12">
                 <button type="button" class="btn btn-secondary" @click="closeDetail()">Close</button>
                 <button type="button" class="btn btn-primary" @click="registerIncome()">Register</button>
+              </div>
+            </div>
+          </div>
+        </template>
+        <template v-else-if="list == 3">
+           <div class="card-body">
+            <div class="form-group row border">
+              <div class="col-md-9">
+                <div class="form-group">
+                  <label for="provider">Provider</label>
+                  <p v-text="provider"></p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label>Tax</label>
+                <p v-text="tax"></p>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Type Voucher</label>
+                  <p v-text="type_voucher"></p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Series Voucher</label>
+                  <p v-text="series_voucher"></p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Number Voucher</label>
+                  <p v-text="num_voucher"></p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row border">
+              <div class="table-responsive col-md-12">
+                <table class="table table-bordered table-striped table-sm">
+                  <thead>
+                    <tr>
+                      <th>Article</th>
+                      <th>Price</th>
+                      <th>Quantity</th>
+                      <th>SubTotal</th>
+                    </tr>
+                  </thead>
+                  <tbody v-if="details.length">
+                    <tr v-for="(detail) in details" :key="detail.id">
+                      <td>
+                        <p v-text="detail.article"></p>
+                      </td>
+                      <td>
+                        <p v-text="detail.price"></p>
+                      </td>
+                      <td>
+                       <p v-text="detail.quantity"></p>
+                      </td>
+                      <td>{{ detail.price * detail.quantity }}</td>
+                    </tr>
+                    <tr style="background-color: #CEECF5">
+                      <td colspan="3" align="right">
+                        <strong>Total Partial</strong>
+                      </td>
+                      <td>$ {{ totalPartial = (total - totalTax).toFixed(2)}}</td>
+                    </tr>
+                    <tr style="background-color: #CEECF5">
+                      <td colspan="3" align="right">
+                        <strong>Total Tax</strong>
+                      </td>
+                      <td>$ {{ totalTax=(total*tax).toFixed(2)}}</td>
+                    </tr>
+                    <tr style="background-color: #CEECF5">
+                      <td colspan="3" align="right">
+                        <strong>Total</strong>
+                      </td>
+                      <td>${{ total }}</td>
+                    </tr>
+                  </tbody>
+                  <tbody v-if="details.length <= 0">
+                    <h3>Not Found</h3>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                <button type="button" class="btn btn-secondary" @click="closeDetail()">Close</button>
               </div>
             </div>
           </div>
@@ -432,6 +520,7 @@ export default {
   data() {
     return {
       id: 0,
+      provider: '',
       id_provider: 0,
       type_voucher: "BILL",
       series_voucher: "",
@@ -680,13 +769,33 @@ export default {
           });
         }
     },
+    showIncomeDetail(income){
+      let ctrl = this;
+      ctrl.list = 3;
+      ctrl.provider = income.name;
+      ctrl.type_voucher = income.type_voucher;
+      ctrl.series_voucher = income.series_voucher;
+      ctrl.num_voucher = income.num_voucher;
+      ctrl.tax = income.tax;
+      ctrl.total = income.total;
+      axios
+        .get('/income/detail?id=' + income.id)
+        .then(function(res) {
+          let response = res.data;
+          ctrl.details = response.details;
+        })
+        .catch(function(err) {
+          console.error(err);
+        });
+    },
     openModal(model) {
       this.articles = [];
       this.modal = 1;
       this.titleModal = "Select one or more articles.";
     },
-    showDetail() {
-      this.list = 0;
+    openRegisterIncome() {
+      this.list = 2;
+      this.cleanForm();
     },
     closeDetail() {
       this.list = 1;
