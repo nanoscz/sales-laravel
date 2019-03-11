@@ -52,6 +52,42 @@ class IncomeController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function getHeader(Request $request)
+    {   
+        if (!$request->ajax()) return redirect('/');
+        $id = $request->id;
+        $incomes = Income::join('person','income.id_provider','=','person.id')
+        ->join('users','income.id_user','=','users.id')
+        ->select('income.id', 'income.type_voucher', 'income.series_voucher', 'income.num_voucher', 
+        'income.date','income.tax', 'income.total', 'income.state', 'person.name', 'users.username')
+        ->where('income.id','=',$id)
+        ->orderBy('income.id','desc')->take(1)->get();
+
+        return ['income' => $income];
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function getDetail(Request $request)
+    {   
+        if (!$request->ajax()) return redirect('/');
+        $id = $request->id;
+        $details = IncomeDetail::join('article','income_detail.id_article','=','article.id')
+        ->select('income_detail.quantity', 'income_detail.price', 'article.name as article')
+        ->where('income_detail.id_income','=',$id)
+        ->orderBy('income_detail.id','desc')->get();
+
+        return ['details' => $details];
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
