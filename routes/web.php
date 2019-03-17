@@ -53,8 +53,16 @@ Route::group(['middleware'=> ['auth']], function(){
     Route::group(['middleware'=> ['seller']], function(){
         Route::get('/client','ClientController@index');
         Route::post('/client','ClientController@store');
+        Route::get('/clients','ClientController@clients');
         Route::put('/client','ClientController@update');
         Route::put('/client/state','ClientController@changeState');
+
+        Route::get('/sale','SaleController@index');
+        Route::get('/sale','SaleController@index');
+        Route::post('/sale','SaleController@store');
+        Route::put('/sale/state','SaleController@changeState');
+        Route::get('/sale/header','SaleController@getHeader');
+        Route::get('/sale/detail','SaleController@getDetail');
     });
 
     Route::group(['middleware'=> ['admin']], function(){
@@ -67,6 +75,8 @@ Route::group(['middleware'=> ['auth']], function(){
         
         Route::get('/article','ArticleController@index');
         Route::get('/articles','ArticleController@articles');
+        Route::get('/articles/sales','ArticleController@listArticleSales');
+        Route::get('/articles/search','ArticleController@searchArticles');
         Route::get('/articles/modal','ArticleController@modalarticles');
         Route::post('/article','ArticleController@store');
         Route::put('/article','ArticleController@update');
@@ -79,6 +89,7 @@ Route::group(['middleware'=> ['auth']], function(){
 
         Route::get('/client','ClientController@index');
         Route::post('/client','ClientController@store');
+        Route::get('/clients','ClientController@clients');
         Route::put('/client','ClientController@update');
         Route::put('/client/state','ClientController@changeState');
 
@@ -95,6 +106,13 @@ Route::group(['middleware'=> ['auth']], function(){
         Route::put('/income/state','IncomeController@changeState');
         Route::get('/income/header','IncomeController@getHeader');
         Route::get('/income/detail','IncomeController@getDetail');
+
+        Route::get('/sale','SaleController@index');
+        Route::get('/sale','SaleController@index');
+        Route::post('/sale','SaleController@store');
+        Route::put('/sale/state','SaleController@changeState');
+        Route::get('/sale/header','SaleController@getHeader');
+        Route::get('/sale/detail','SaleController@getDetail');
     });  
 });
 
