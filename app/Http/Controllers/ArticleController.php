@@ -45,6 +45,24 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function articlesPdf(Request $request)
+    {   
+        $articles = Article::join('category','article.id_category','=','category.id')
+        ->select('article.id','article.code','article.name','article.price','article.stock','article.description',
+        'article.state','article.id_category','category.name as category')
+        ->orderBy('article.name','desc')->paginate(10);
+        
+        $count = Article::count();
+        $pdf = \PDF::loadView('pdf.article',['articles' => $articles, 'count'=> $count]);
+        return $pdf->download('article.pdf');
+    }
+
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function listArticleSales(Request $request)
     {   
         if (!$request->ajax()) return redirect('/');

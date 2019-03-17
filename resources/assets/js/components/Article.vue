@@ -19,6 +19,9 @@
 						@click="openModal('article','register')">
             <i class="icon-plus"></i>&nbsp;Add
           </button>
+					<button @click="loadPdf()" class="btn btn-info">
+						<i class="icon-doc"></i>&nbsp; Report PDF
+					</button>
         </div>
         <div class="card-body">
           <div class="form-group row">
@@ -501,6 +504,9 @@ export default {
 						console.log('B')
 				}
 			});
+		},
+		loadPdf(){
+			window.open('http://localhost:8000/articles/pdf', '_blank')
 		}
   },
   mounted() {
