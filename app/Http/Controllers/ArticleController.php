@@ -40,6 +40,31 @@ class ArticleController extends Controller
         ];
     }
 
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function listArticleSales(Request $request)
+    {   
+        if (!$request->ajax()) return redirect('/');
+        $search = $request->search;
+        $option = $request->option;
+
+        if ($search == '') {
+            $articles = Article::join('category','article.id_category','=','category.id')
+            ->select('article.id','article.code','article.name','article.price','article.stock','article.description','article.state','article.id_category','category.name as category')
+            ->where('article.stock','>','0')
+            ->orderBy('article.id','desc')->paginate(10);
+        } else {
+            $articles = Article::join('category','article.id_category','=','category.id')
+            ->select('article.id','article.code','article.name','article.price','article.stock','article.description','article.state','article.id_category','category.name as category')
+            ->where('article.stock','>','0')
+            ->where('article.'.$option,'like','%'. $search .'%')->orderBy('id','desc')->paginate(10);
+        }
+        return ['articles' => $articles];
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -78,6 +103,24 @@ class ArticleController extends Controller
 
         return ['articles' => $articles];
     }
+
+    /**
+     * Display a categories of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function searchArticles(Request $request)
+    {   
+        $filter = $request->filter;
+        if (!$request->ajax()) return redirect('/'); 
+        $articles = Article::where('code','=', $filter)
+        ->select('id','name','stock','price')
+        ->where('stock','>','0')
+        ->orderBy('name','asc')->get();
+
+        return ['articles' => $articles];
+    }
+    
 
     /**
      * Store a newly created resource in storage.

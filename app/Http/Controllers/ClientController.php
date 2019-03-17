@@ -37,6 +37,23 @@ class ClientController extends Controller
     }
 
     /**
+     * Display a categories of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function clients(Request $request)
+    {   
+        if (!$request->ajax()) return redirect('/'); 
+        $filter = $request->filter;
+        $clients = Person::where('name','like', '%'.$filter .'%')
+        ->orWhere('num_document', 'like', '%'. $filter .'%')
+        ->select('id','person.name','num_document')
+        ->orderBy('name','asc')->get();
+
+        return ['clients' => $clients];
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
