@@ -18,7 +18,7 @@
                 <provider></provider>
             </template>
             <template v-if="menu==5">
-                <h1>Ventas</h1>
+                <sale></sale>
             </template>
             <template v-if="menu==6">
                 <client></client>
@@ -43,7 +43,7 @@
             </template>
         @elseif(Auth::user()->id_rol == 2)
             <template v-if="menu==5">
-                <h1>Ventas</h1>
+                <sale></sale>
             </template>
             <template v-if="menu==6">
                 <client></client>
